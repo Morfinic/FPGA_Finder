@@ -1,6 +1,0 @@
-@FPGA_Finder_HostAddress = http://localhost:8080
-
-GET {{FPGA_Finder_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

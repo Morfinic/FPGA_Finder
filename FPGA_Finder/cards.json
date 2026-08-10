@@ -1,0 +1,79 @@
+﻿[
+  {
+    "model": "Alveo U50",
+    "family": "AMD Alveo",
+    "formFactor": "Low-profile, single-slot",
+    "interface": "PCIe Gen3 x16 / Gen4 x8",
+    "memoryGB": 8,
+    "memoryType": "HBM2",
+    "throughputGbps": 100,
+    "purpose": "Data Analytics",
+    "typicalUseCase": "Akceleracja baz danych, wyszukiwanie, kompresja"
+  },
+  {
+    "model": "Alveo U55C",
+    "family": "AMD Alveo",
+    "formFactor": "Full-height, single-slot",
+    "interface": "PCIe Gen4 x16",
+    "memoryGB": 16,
+    "memoryType": "HBM2",
+    "throughputGbps": 100,
+    "purpose": "HPC / Storage",
+    "typicalUseCase": "Obliczenia wysokiej wydajności, przetwarzanie rozproszone"
+  },
+  {
+    "model": "Alveo U200",
+    "family": "AMD Alveo",
+    "formFactor": "Full-height, dual-slot",
+    "interface": "PCIe Gen3 x16",
+    "memoryGB": 64,
+    "memoryType": "DDR4",
+    "throughputGbps": 40,
+    "purpose": "Network Acceleration",
+    "typicalUseCase": "Przetwarzanie pakietów sieciowych, low-latency trading"
+  },
+  {
+    "model": "Alveo U250",
+    "family": "AMD Alveo",
+    "formFactor": "Full-height, dual-slot",
+    "interface": "PCIe Gen3 x16",
+    "memoryGB": 64,
+    "memoryType": "DDR4",
+    "throughputGbps": 40,
+    "purpose": "Machine Learning Inference",
+    "typicalUseCase": "Inferencja modeli ML w czasie rzeczywistym"
+  },
+  {
+    "model": "Alveo U280",
+    "family": "AMD Alveo",
+    "formFactor": "Full-height, dual-slot",
+    "interface": "PCIe Gen4 x16",
+    "memoryGB": 32,
+    "memoryType": "HBM2 + DDR4",
+    "throughputGbps": 100,
+    "purpose": "Machine Learning / Database",
+    "typicalUseCase": "Trenowanie i inferencja ML, akceleracja SQL"
+  },
+  {
+    "model": "Alveo V70",
+    "family": "AMD Alveo",
+    "formFactor": "Low-profile, single-slot",
+    "interface": "PCIe Gen4 x8",
+    "memoryGB": 32,
+    "memoryType": "LPDDR4",
+    "throughputGbps": 200,
+    "purpose": "Video Processing",
+    "typicalUseCase": "Transkodowanie wideo, streaming"
+  },
+  {
+    "model": "Alveo X3522",
+    "family": "AMD Alveo (SmartNIC)",
+    "formFactor": "Low-profile, single-slot",
+    "interface": "PCIe Gen4 x8",
+    "memoryGB": 4,
+    "memoryType": "DDR4",
+    "throughputGbps": 100,
+    "purpose": "SmartNIC / Network Acceleration",
+    "typicalUseCase": "Odciążanie CPU od zadań sieciowych, firewall, load balancing"
+  }
+]
