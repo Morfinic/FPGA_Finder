@@ -1,5 +1,5 @@
-using FPGA_Finder.Data;
-using FPGA_Finder.Services;
+using Backend.Data;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 

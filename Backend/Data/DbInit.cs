@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using FPGA_Finder.Models;
+using Backend.Models;
 
-namespace FPGA_Finder.Data;
+namespace Backend.Data;
 
 public static class DbInit
 {
@@ -19,7 +19,11 @@ public static class DbInit
         }
         
         var jsonData = await File.ReadAllTextAsync(filepath);
-        var devices = JsonSerializer.Deserialize<List<FPGA_Card>>(jsonData);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var devices = JsonSerializer.Deserialize<List<FPGA_Card>>(jsonData, options);
         
         if (devices != null && devices.Any())
         {

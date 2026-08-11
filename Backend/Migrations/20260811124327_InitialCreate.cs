@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FPGA_Finder.Migrations
+namespace Backend.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -19,13 +19,13 @@ namespace FPGA_Finder.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Model = table.Column<string>(type: "text", nullable: false),
                     Family = table.Column<string>(type: "text", nullable: false),
-                    formFactor = table.Column<string>(type: "text", nullable: false),
+                    FormFactor = table.Column<string>(type: "text", nullable: false),
                     Interface = table.Column<string>(type: "text", nullable: false),
-                    memoryGB = table.Column<int>(type: "integer", nullable: false),
-                    memoryType = table.Column<string>(type: "text", nullable: false),
-                    throughputGbps = table.Column<int>(type: "integer", nullable: false),
+                    MemoryGB = table.Column<int>(type: "integer", nullable: false),
+                    MemoryType = table.Column<string>(type: "text", nullable: false),
+                    ThroughputGbps = table.Column<int>(type: "integer", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
-                    typicalUseCase = table.Column<string>(type: "text", nullable: false)
+                    TypicalUseCase = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

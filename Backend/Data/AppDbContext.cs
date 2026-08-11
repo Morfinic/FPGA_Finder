@@ -1,7 +1,7 @@
-﻿using FPGA_Finder.Models;
+﻿using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FPGA_Finder.Data;
+namespace Backend.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
