@@ -1,6 +1,6 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  fpga_finder:
+  backend:
     build:
       context: "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder"
       dockerfile: "Backend/Dockerfile"
@@ -17,4 +17,23 @@ services:
     - "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder\\Backend:/app:rw"
     - "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder:/src:rw"
     - "C:\\Users\\bruno\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  frontend:
+    build:
+      context: "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder"
+      dockerfile: "Frontend/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/../../../../../.nuget/packages/microsoft.aspnetcore.components.webassembly.devserver/10.0.10/tools/blazor-devserver.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "frontend:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder\\Frontend:/app:rw"
+    - "C:\\Users\\bruno\\Documents\\Programowanie\\FPGA_Finder\\FPGA_Finder:/src:rw"
+    - "C:\\Users\\bruno\\.nuget\\packages:/root/.nuget/packages"
     working_dir: "/app"

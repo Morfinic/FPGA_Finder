@@ -1,0 +1,19 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<button @onclick="CheckApiStatus" class="btn btn-primary">Sprawdź połączenie</button>
+
+@code{
+    private async Task CheckApiStatus()
+    {
+        HttpResponseMessage response = await Http.GetAsync("api/FpgaCard");
+        int statusCode = (int)response.StatusCode;
+        Console.WriteLine(statusCode);
+    }    
+}

@@ -1,9 +1,10 @@
 ﻿services:
-  fpga_finder:
+  backend:
     image: backend
     build:
       context: .
       dockerfile: Backend/Dockerfile
+    container_name: Backend
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
@@ -12,7 +13,6 @@
       db:
         condition: 'service_healthy'
           
-
   db:
     image: postgres:16-alpine
     container_name: postgres_db
@@ -29,6 +29,17 @@
       retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: Frontend/Dockerfile
+    container_name: Frontend
+    ports: 
+      - "5000:5000"
+    depends_on:
+      backend:
+        condition: service_started
 
 volumes:
   postgres_data:
