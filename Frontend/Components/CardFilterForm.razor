@@ -11,12 +11,38 @@
         <div class="card-body">
             <div class="mb-3">
                 <label class="form-label">Rodzina</label>
-                <input type="text" class="form-control" @bind="Filter.Family">
+                @if (filterOptions?.Families != null)
+                {
+                    <select class="form-control" @bind="Filter.Family">
+                        <option value="">Wybierz rodzinę</option>
+                        @foreach (var family in filterOptions.Families)
+                        {
+                            <option value="@family">@family</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p class="text-muted small">Ładowanie opcji...</p>
+                }
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Zastosowanie</label>
-                <input type="text" class="form-control" @bind="Filter.Purpose">
+                @if (filterOptions?.Purposes != null)
+                {
+                    <select class="form-control" @bind="Filter.Purpose">
+                        <option value="">Wybierz zastosowanie</option>
+                        @foreach (var purpose in filterOptions.Purposes)
+                        {
+                            <option value="@purpose">@purpose</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p class="text-muted small">Ładowanie opcji...</p>
+                }
             </div>
 
             <div class="mb-3">
@@ -40,6 +66,7 @@
 @code {
     private bool isLoading = false;
     private bool isExpanded = true;
+    private FilterOptions? filterOptions;
 
     [Parameter]
     public FpgaCardFilter Filter { get; set; } = new();
@@ -47,6 +74,18 @@
     public EventCallback<List<FpgaCardSummary>> OnSearch { get; set; }
     [Parameter]
     public EventCallback OnReset { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            filterOptions = await Http.GetFromJsonAsync<FilterOptions>("api/FpgaCard/filter-options");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
 
     private void ToggleExpand()
     {

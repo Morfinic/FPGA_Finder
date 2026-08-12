@@ -16,7 +16,7 @@ public class FpgaCardService(AppDbContext context) : IFpgaCardService
         return Task.FromResult(result);
     }
 
-    public Task<List<FPGA_Card>> SearchCards(FpgaCardFilter filter)
+    public async Task<List<FPGA_Card>> SearchCards(FpgaCardFilter filter)
     {
         var query = context.FPGA_Cards.AsQueryable();
         
@@ -29,6 +29,16 @@ public class FpgaCardService(AppDbContext context) : IFpgaCardService
         if (filter.MaxThroughputGbps > 0 && filter.MaxThroughputGbps >= filter.MinThroughputGbps)
             query = query.Where(c => c.ThroughputGbps <= filter.MaxThroughputGbps);
         
-        return query.ToListAsync();
+        return await query.ToListAsync();
+    }
+
+    public async Task<FilterOptions> GetFilterOptionsAsync()
+    {
+        var cards = await context.FPGA_Cards.ToListAsync();
+        return new FilterOptions
+        {
+            Families = cards.Select(c => c.Family).Distinct().OrderBy(f => f).ToList(),
+            Purposes = cards.Select(c => c.Purpose).Distinct().OrderBy(p => p).ToList()
+        };
     }
 }

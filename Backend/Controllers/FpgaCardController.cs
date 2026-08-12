@@ -23,4 +23,8 @@ public class FpgaCardController(IFpgaCardService service) : ControllerBase
     [HttpGet("filter")]
     public async Task<ActionResult<List<FPGA_Card>>> SearchCards([FromQuery] FpgaCardFilter filter) =>
         Ok(await service.SearchCards(filter));
+
+    [HttpGet("filter-options")]
+    public async Task<ActionResult<FilterOptions>> GetFilterOptions() =>
+        Ok(await service.GetFilterOptionsAsync());
 }

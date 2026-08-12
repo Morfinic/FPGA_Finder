@@ -1,0 +1,65 @@
+﻿@typeparam TItem
+
+<div>
+    <table class="table">
+        <thead>
+        @ChildContentHeader
+        </thead>
+        <tbody>
+        @foreach(var item in PaginatedData)
+        @ChildContentRow(item)
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination-controls">
+    <button @onclick="PreviousPage" disabled="@IsPreviousDisabled">&lt;</button>
+
+    @foreach (var pageNumber in Enumerable.Range(1, TotalPages))
+    {
+        <button @onclick="() => GoToPage(pageNumber)" class="@(CurrentPage == pageNumber ? "active" : "")">
+            @pageNumber
+        </button>
+    }
+
+    <button @onclick="NextPage" disabled="@IsNextDisabled">&gt;</button>
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<TItem> Items {get; set;}
+    [Parameter]
+    public int DefaultPageSize { get; set; } = 6;
+    [Parameter]
+    public RenderFragment ChildContentHeader {get; set;}
+    [Parameter]
+    public RenderFragment<TItem> ChildContentRow {get; set;}
+    
+    private int PageSize {get; set;}
+    private List<TItem> PaginatedData => Items.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+    private int CurrentPage { get; set; } = 1;
+    
+    private int TotalPages => (int)Math.Ceiling((double)Items.Count() / PageSize);
+    private bool IsPreviousDisabled => CurrentPage == 1;
+    private bool IsNextDisabled => CurrentPage == TotalPages;
+
+    protected override void OnInitialized()
+    {
+        PageSize = DefaultPageSize;
+    }
+
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages) CurrentPage++;
+    }
+
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1) CurrentPage--;
+    }
+
+    private void GoToPage(int pageNumber)
+    {
+        CurrentPage = pageNumber;
+    }
+}

@@ -4,11 +4,20 @@
 <PageTitle>FPGA Finder</PageTitle>
 
 <div class="row mb-3">
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-md-4">
         <CardFilterForm Filter="filter" OnSearch="UpdateCards" OnReset="ResetFilter" />
     </div>
-    <div class="col-12 col-md-9">
-        <h3>Lista kart</h3>
+    <div class="col-12 col-md-8">
+        <div class="d-flex align-items-center d-grid gap-3 mb-3">
+            <h3>Lista kart</h3>
+            <select class="form-select form-select-sm" style="width: auto; max-width: 200px;" @bind="sortOption" @bind:after="ApplySort">
+                <option value="">Sortuj po</option>
+                <option value="memory_asc">Pamięć ↑ (rosnąco)</option>
+                <option value="memory_desc">Pamięć ↓ (malejąco)</option>
+                <option value="throughput_asc">Przepustowość ↑ (rosnąco)</option>
+                <option value="throughput_desc">Przepustowość ↓ (malejąco)</option>
+            </select>
+        </div>
         @if (cards == null)
         {
             <p>Ładowanie...</p>
@@ -19,25 +28,39 @@
         }
         else
         {
-            <table class="table table-hover">
-                <thead>
-                <tr>
+            @* <table class="table table-hover"> *@
+            @*     <thead> *@
+            @*     <tr> *@
+            @*         <th>Model</th> *@
+            @*         <th>Family</th> *@
+            @*         <th>Typical Use Case</th> *@
+            @*     </tr> *@
+            @*     </thead> *@
+            @*     <tbody> *@
+            @*     @foreach (var card in cards) *@
+            @*     { *@
+            @*         <tr style="cursor: pointer;" @onclick="() => OpenDetails(card.Id)"> *@
+            @*             <td>@card.Model</td> *@
+            @*             <td>@card.Family</td> *@
+            @*             <td>@card.TypicalUseCase</td> *@
+            @*         </tr> *@
+            @*     } *@
+            @*     </tbody> *@
+            @* </table> *@
+            <PaginationComponent TItem="FpgaCardSummary" Items="cards" DefaultPageSize="6">
+                <ChildContentHeader>
                     <th>Model</th>
                     <th>Family</th>
                     <th>Typical Use Case</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var card in cards)
-                {
+                </ChildContentHeader>
+                <ChildContentRow Context="card">
                     <tr style="cursor: pointer;" @onclick="() => OpenDetails(card.Id)">
                         <td>@card.Model</td>
                         <td>@card.Family</td>
                         <td>@card.TypicalUseCase</td>
                     </tr>
-                }
-                </tbody>
-            </table>
+                </ChildContentRow>
+            </PaginationComponent>
         }
     </div>
 </div>
@@ -50,6 +73,7 @@
     private bool isPopupOpen = false;
     private int selectedCardId = 0;
     private FpgaCardFilter filter = new();
+    private string sortOption = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,12 +83,28 @@
     private void UpdateCards(List<FpgaCardSummary> results)
     {
         cards = results;
+        ApplySort();
     }
 
     private async Task ResetFilter()
     {
         filter = new();
         cards = await Http.GetFromJsonAsync<List<FpgaCardSummary>>("api/FpgaCard");
+        ApplySort();
+    }
+
+    private void ApplySort()
+    {
+        if (cards == null) return;
+
+        cards = sortOption switch
+        {
+            "memory_asc" => cards.OrderBy(c => c.MemoryGB).ToList(),
+            "memory_desc" => cards.OrderByDescending(c => c.MemoryGB).ToList(),
+            "throughput_asc" => cards.OrderBy(c => c.ThroughputGbps).ToList(),
+            "throughput_desc" => cards.OrderByDescending(c => c.ThroughputGbps).ToList(),
+            _ => cards.ToList()
+        };
     }
 
     private void OpenDetails(int cardId)

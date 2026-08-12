@@ -75,5 +75,82 @@
     "throughputGbps": 100,
     "purpose": "SmartNIC / Network Acceleration",
     "typicalUseCase": "Odciążanie CPU od zadań sieciowych, firewall, load balancing"
+  },
+  {
+    "model": "Kria KV260",
+    "family": "Xilinx Kria",
+    "formFactor": "Small form factor, fanless",
+    "interface": "USB, Gigabit Ethernet",
+    "memoryGB": 4,
+    "memoryType": "LPDDR4",
+    "throughputGbps": 10,
+    "purpose": "Edge AI / IoT",
+    "typicalUseCase": "Wdrażanie modeli AI na urządzeniach brzegowych, przetwarzanie wideo edge"
+  },
+  {
+    "model": "Kria KV360",
+    "family": "Xilinx Kria",
+    "formFactor": "Small form factor, fanless",
+    "interface": "USB, Gigabit Ethernet, CSI",
+    "memoryGB": 8,
+    "memoryType": "LPDDR4",
+    "throughputGbps": 20,
+    "purpose": "Vision / Edge AI",
+    "typicalUseCase": "Systemy widzenia komputerowego, real-time video analytics"
+  },
+  {
+    "model": "Virtex-7 VC707",
+    "family": "Xilinx Virtex-7",
+    "formFactor": "PCIe add-in card",
+    "interface": "PCIe Gen2 x8",
+    "memoryGB": 4,
+    "memoryType": "DDR3",
+    "throughputGbps": 16,
+    "purpose": "HPC / Research",
+    "typicalUseCase": "Badania akademickie, prototypowanie, symulacje numeryczne"
+  },
+  {
+    "model": "Zynq UltraScale+ ZCU104",
+    "family": "Xilinx Zynq UltraScale+",
+    "formFactor": "Development board",
+    "interface": "PCIe Gen3 x4, USB3",
+    "memoryGB": 2,
+    "memoryType": "DDR4",
+    "throughputGbps": 50,
+    "purpose": "Embedded / Machine Learning",
+    "typicalUseCase": "Systemy wbudowane z AI, przetwarzanie sygnałów w czasie rzeczywistym"
+  },
+  {
+    "model": "Xilinx Alveo U30",
+    "family": "AMD Alveo",
+    "formFactor": "Low-profile, single-slot",
+    "interface": "PCIe Gen4 x8",
+    "memoryGB": 16,
+    "memoryType": "HBM2e",
+    "throughputGbps": 80,
+    "purpose": "Machine Learning Inference",
+    "typicalUseCase": "Inferencja modeli transformerów, real-time video inference"
+  },
+  {
+    "model": "Xilinx Alveo U60",
+    "family": "AMD Alveo",
+    "formFactor": "Low-profile, single-slot",
+    "interface": "PCIe Gen5 x16",
+    "memoryGB": 24,
+    "memoryType": "HBM3",
+    "throughputGbps": 250,
+    "purpose": "HPC / Machine Learning",
+    "typicalUseCase": "Trenowanie dużych modeli ML, symulacje finansowe, AI workloads"
+  },
+  {
+    "model": "Modu VC709",
+    "family": "Xilinx Virtex",
+    "formFactor": "PCIe add-in card",
+    "interface": "PCIe Gen2 x8",
+    "memoryGB": 8,
+    "memoryType": "DDR3 + QDR",
+    "throughputGbps": 25,
+    "purpose": "Network Packet Processing",
+    "typicalUseCase": "Przetwarzanie pakietów, DPI, security appliances"
   }
 ]
