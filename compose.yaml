@@ -14,7 +14,7 @@
         condition: 'service_healthy'
           
   db:
-    image: postgres:16-alpine
+    image: timescale/timescaledb:latest-pg16
     container_name: postgres_db
     environment:
       POSTGRES_USER: admin

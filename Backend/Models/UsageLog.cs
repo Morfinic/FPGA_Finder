@@ -1,5 +1,8 @@
-﻿namespace Backend.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
+namespace Backend.Models;
+
+[PrimaryKey(nameof(Timestamp), nameof(CardId))]
 public class UsageLog
 {
     public int CardId { get; set; }
