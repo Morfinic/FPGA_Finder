@@ -7,5 +7,5 @@ public interface IFpgaCardService
 {
     Task<List<FPGA_Card>> GetAllCardsAsync();
     Task<FPGA_Card?> GetCardByIdAsync(int cardId);
-    Task<List<FPGA_Card>> SearchCards(FpgaCardFilterDto filter);
+    Task<List<FPGA_Card>> SearchCards(FpgaCardFilter filter);
 }

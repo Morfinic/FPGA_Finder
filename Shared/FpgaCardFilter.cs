@@ -1,6 +1,6 @@
 ﻿namespace Shared;
 
-public class FpgaCardFilterDto
+public class FpgaCardFilter
 {
     public string? Family { get; set; }
     public string? Purpose { get; set; }

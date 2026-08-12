@@ -1,0 +1,89 @@
+@inject HttpClient Http
+
+@if (IsOpen)
+{
+    <div class="modal" style="display: block; background-color: rgba(0,0,0,0.5);" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @if (Card == null) { <text>Ładowanie...</text> } else { <text>@Card.Model</text> }
+                    </h5>
+                    <button type="button" class="btn-close" @onclick="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (Card == null)
+                    {
+                        <p>Ładowanie szczegółów...</p>
+                    }
+                    else
+                    {
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>Rodzina:</strong> @Card.Family</p>
+                                <p><strong>Format:</strong> @Card.FormFactor</p>
+                                <p><strong>Interfejs:</strong> @Card.Interface</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Pamięć:</strong> @Card.MemoryGB GB</p>
+                                <p><strong>Typ pamięci:</strong> @Card.MemoryType</p>
+                                <p><strong>Przepustowość:</strong> @Card.ThroughputGbps Gbps</p>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Zastosowanie:</strong>
+                                <p>@Card.Purpose</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Typowy przypadek użycia:</strong>
+                                <p>@Card.TypicalUseCase</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Close">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool IsOpen { get; set; }
+    [Parameter]
+    public int CardId { get; set; }
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private FpgaCard? Card;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsOpen && CardId > 0 && Card == null)
+        {
+            await LoadCardDetails();
+        }
+    }
+
+    private async Task LoadCardDetails()
+    {
+        try
+        {
+            Card = await Http.GetFromJsonAsync<FpgaCard>($"api/FpgaCard/{CardId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    private async Task Close()
+    {
+        Card = null;
+        await OnClose.InvokeAsync();
+    }
+}
