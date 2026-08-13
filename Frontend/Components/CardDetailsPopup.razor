@@ -43,6 +43,34 @@
                         </div>
                     }
                 </div>
+                <div class="modal-body">
+                    @if (CardUsageLog == null)
+                    {
+                        <p>Ładowanie logów...</p>
+                    }
+                    else
+                    {
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Średnie zużycie%</th>
+                                <th>Zmierzona przepustowość (Gbps)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var log in CardUsageLog)
+                            {
+                                <tr>
+                                    <td>@log.Date</td>
+                                    <td>@log.AvgUtilizationPercent</td>
+                                    <td>@log.MeasuredThroughput</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    }
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @onclick="Close">Zamknij</button>
                 </div>
@@ -60,12 +88,14 @@
     public EventCallback OnClose { get; set; }
 
     private FpgaCard? Card;
+    private List<DailyUsageDto>? CardUsageLog;
 
     protected override async Task OnParametersSetAsync()
     {
         if (IsOpen && CardId > 0 && Card == null)
         {
             await LoadCardDetails();
+            await LoadUsageLogs();
         }
     }
 
@@ -77,7 +107,19 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"[Get Card Detail] Error: {ex.Message}");
+        }
+    }
+
+    private async Task LoadUsageLogs()
+    {
+        try
+        {
+            CardUsageLog = await Http.GetFromJsonAsync<List<DailyUsageDto>>($"api/UsageLogs/card/{CardId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Get Card Usage Logs] Error: {ex.Message}");
         }
     }
 

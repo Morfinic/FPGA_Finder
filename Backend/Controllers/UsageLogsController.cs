@@ -17,14 +17,14 @@ public class UsageLogsController : ControllerBase
     }
     
     [HttpGet("card/{card_id}")]
-    public async Task<ActionResult<List<DailyUsageDto>>> GetDailyStats(int card_id, [FromQuery] int days = 4)
+    public async Task<ActionResult<List<DailyUsageDto>>> GetDailyStats(int card_id, [FromQuery] int days = 10)
     {
         var sql = """
             SELECT
                 time_bucket('1 day', "Timestamp") as "DATE",
                 "CardId",
                 ROUND(AVG("UtilizationPercent")::numeric, 2) AS "AvgUtilizationPercent",
-                ROUND(AVG("MeasuredThroughputGbps")::numeric, 2) AS "AvgThroughputPercent"
+                ROUND(AVG("MeasuredThroughputGbps")::numeric, 2) AS "MeasuredThroughput"
             FROM "UsageLogs"
             WHERE "CardId" = {0}
             GROUP BY "DATE", "CardId"
