@@ -36,7 +36,7 @@
       dockerfile: Frontend/Dockerfile
     container_name: Frontend
     ports: 
-      - "5000:5000"
+      - "5079:5079"
     depends_on:
       backend:
         condition: service_started
