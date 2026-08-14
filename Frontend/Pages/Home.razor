@@ -51,12 +51,16 @@
                 <ChildContentHeader>
                     <th>Model</th>
                     <th>Family</th>
+                    <th>Pamięć (GB)</th>
+                    <th>Przepustowość (Gbps)</th>
                     <th>Typical Use Case</th>
                 </ChildContentHeader>
                 <ChildContentRow Context="card">
                     <tr style="cursor: pointer;" @onclick="() => OpenDetails(card.Id)">
                         <td>@card.Model</td>
                         <td>@card.Family</td>
+                        <td>@card.MemoryGB</td>
+                        <td>@card.ThroughputGbps</td>
                         <td>@card.TypicalUseCase</td>
                     </tr>
                 </ChildContentRow>
