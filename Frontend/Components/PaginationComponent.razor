@@ -1,17 +1,5 @@
 ﻿@typeparam TItem
 
-<div>
-    <table class="table">
-        <thead>
-        @ChildContentHeader
-        </thead>
-        <tbody>
-        @foreach(var item in PaginatedData)
-        @ChildContentRow(item)
-        </tbody>
-    </table>
-</div>
-
 <div class="pagination-controls">
     <button @onclick="PreviousPage" disabled="@IsPreviousDisabled">&lt;</button>
 
@@ -25,15 +13,36 @@
     <button @onclick="NextPage" disabled="@IsNextDisabled">&gt;</button>
 </div>
 
+<div>
+    <table class="table">
+        <thead>
+        @ChildContentHeader
+        </thead>
+        <tbody>
+        @foreach(var item in PaginatedData)
+        @ChildContentRow(item)
+        </tbody>
+    </table>
+</div>
+
 @code {
+
     [Parameter]
-    public IEnumerable<TItem> Items {get; set;}
+    public IEnumerable<TItem>? Items
+    {
+        get;
+        set
+        {
+            field = value;
+            CurrentPage = 1;
+        }
+    }
     [Parameter]
     public int DefaultPageSize { get; set; } = 6;
     [Parameter]
-    public RenderFragment ChildContentHeader {get; set;}
+    public RenderFragment? ChildContentHeader {get; set;}
     [Parameter]
-    public RenderFragment<TItem> ChildContentRow {get; set;}
+    public RenderFragment<TItem>? ChildContentRow {get; set;}
     
     private int PageSize {get; set;}
     private List<TItem> PaginatedData => Items.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();

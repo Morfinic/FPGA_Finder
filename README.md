@@ -11,23 +11,26 @@ kart na przestrzeni czasu.
 ### `Backend/` - ASP.NET Core Web Api (.NET 10)
 | Katalog            | Odpowiedzialność                                                          |
 |--------------------|---------------------------------------------------------------------------|
-| `Api/Controllers/` | Warstwa HTTP - obsługa żądań REST API                                     |
-| `Api/Data/`        | Konfiguracja EF Core, definicja kontekstu bazy danych i seedowanie danych |
-| `Api/Models/`      | Encje bazodanowe                                                          |
-| `Api/Migrations/`  | Pliki migracji bazy danych (Entity Framework Core)                                                                          |
-| `Api/Services/`    | Logika biznesowa                                                          |
+| `Backend/Controllers/` | Warstwa HTTP - obsługa żądań REST API                                     |
+| `Backend/Data/`        | Konfiguracja EF Core, definicja kontekstu bazy danych i seedowanie danych |
+| `Backend/Models/`      | Encje bazodanowe                                                          |
+| `Backend/Migrations/`  | Pliki migracji bazy danych (Entity Framework Core)                                                                          |
+| `Backend/Services/`    | Logika biznesowa                                                          |
 
 ---
 
 ### `Frontend/` - Blazor Webassembly
-| Katalog           | Odpowiedzialność                |
-|-------------------|---------------------------------|
-| `Api/Components/` | Komponenty wielokrotnego użytku |
-| `Api/Pages/`      | Strony aplikacji                |
+| Katalog                | Odpowiedzialność                                                |
+|------------------------|-----------------------------------------------------------------|
+| `Frontend/Components/` | Komponenty wielokrotnego użytku                                 |
+| `Frontend/Pages/`      | Strony aplikacji                                                |
+| `Frontend/Services/`   | Wszystkie zapytania do Api zebrane w jednej klasie pomocnieczej |
+| `Frontend/Models/`     | Modele pomocnicze Frontendu                                     |
 
 ---
 
 ### `Shared/` - Współdzielona biblioteka
+Projekt do którego odwołuje się zarówno `Backend` jak i `Frontend`.
 
 ---
 
@@ -42,10 +45,12 @@ kart na przestrzeni czasu.
 ---
 
 ## Uruchomienie
+Cały stos aplikacyjny (Frontedn, Backend oraz Baza danych) został skonfigurowany przy użyciu Docker Compose.
+Baza danych jest automatycznie tworzona przy uruchomieniu aplikacji (modele + zasiewanie danymi).
 
 ### Wymagania
 - [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-- Docker Desktop v4.86.0
+- Docker Desktop v4.86.0 (lub nowszy) z uruchomioną usługą Docker Engine
 
 ---
 
@@ -65,8 +70,16 @@ cd FPGA_Finder
 docker compose up --build
 ```
 
+Powyższe polecenie automatycznie pobierze obraz TimescaleDB, zbuduje kontenery, 
+zaaplikuje migrację oraz zainicjalizuje bazę danych.
+
 | Usługa   | URL                            | Opis                              |
 |----------|--------------------------------|-----------------------------------|
 | Backend  | `http://localhost:8080`        | Główny endpoint REST API          |
 | Scalar   | `http://localhost:8080/scalar` | Interaktywna dokumentacja API     |
 | Frontend | `http://localhost:5079`        | Główny endpoint aplikacji webowej |
+
+## Zrealizowane dodatkowe funkcjonalności
+* TimescaleDB
+* Sortowanie i paginacja
+* Prosta responsywność

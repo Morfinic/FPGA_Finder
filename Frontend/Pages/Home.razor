@@ -1,5 +1,6 @@
-﻿@inject HttpClient Http
-@page "/"
+﻿@page "/"
+@using Frontend.Models
+@inject FpgaApiService FpgaApi
 
 <PageTitle>FPGA Finder</PageTitle>
 
@@ -28,32 +29,13 @@
         }
         else
         {
-            @* <table class="table table-hover"> *@
-            @*     <thead> *@
-            @*     <tr> *@
-            @*         <th>Model</th> *@
-            @*         <th>Family</th> *@
-            @*         <th>Typical Use Case</th> *@
-            @*     </tr> *@
-            @*     </thead> *@
-            @*     <tbody> *@
-            @*     @foreach (var card in cards) *@
-            @*     { *@
-            @*         <tr style="cursor: pointer;" @onclick="() => OpenDetails(card.Id)"> *@
-            @*             <td>@card.Model</td> *@
-            @*             <td>@card.Family</td> *@
-            @*             <td>@card.TypicalUseCase</td> *@
-            @*         </tr> *@
-            @*     } *@
-            @*     </tbody> *@
-            @* </table> *@
-            <PaginationComponent TItem="FpgaCardSummary" Items="cards" DefaultPageSize="6">
+           <PaginationComponent TItem="FpgaCardSummary" Items="cards" DefaultPageSize="6">
                 <ChildContentHeader>
                     <th>Model</th>
                     <th>Family</th>
                     <th>Pamięć (GB)</th>
                     <th>Przepustowość (Gbps)</th>
-                    <th>Typical Use Case</th>
+                    <th>Typowy przypadek użycia</th>
                 </ChildContentHeader>
                 <ChildContentRow Context="card">
                     <tr style="cursor: pointer;" @onclick="() => OpenDetails(card.Id)">
@@ -81,7 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        cards = await Http.GetFromJsonAsync<List<FpgaCardSummary>>("api/FpgaCard");
+        cards = await FpgaApi.GetAllAsync();
     }
 
     private void UpdateCards(List<FpgaCardSummary> results)
@@ -93,7 +75,7 @@
     private async Task ResetFilter()
     {
         filter = new();
-        cards = await Http.GetFromJsonAsync<List<FpgaCardSummary>>("api/FpgaCard");
+        cards = await FpgaApi.GetAllAsync();
         ApplySort();
     }
 
@@ -103,6 +85,7 @@
 
         cards = sortOption switch
         {
+            "" => cards.OrderBy(c => c.Id).ToList(),
             "memory_asc" => cards.OrderBy(c => c.MemoryGB).ToList(),
             "memory_desc" => cards.OrderByDescending(c => c.MemoryGB).ToList(),
             "throughput_asc" => cards.OrderBy(c => c.ThroughputGbps).ToList(),

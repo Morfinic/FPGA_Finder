@@ -26,7 +26,7 @@ public class FpgaCardService(AppDbContext context) : IFpgaCardService
             query = query.Where(c => c.Purpose.ToLower().Contains(filter.Purpose.Trim().ToLower()));
         if (filter.MinThroughputGbps > 0)
             query = query.Where(c => c.ThroughputGbps >= filter.MinThroughputGbps);
-        if (filter.MaxThroughputGbps > 0 && filter.MaxThroughputGbps >= filter.MinThroughputGbps)
+        if (filter.MaxThroughputGbps > 0)
             query = query.Where(c => c.ThroughputGbps <= filter.MaxThroughputGbps);
         
         return await query.ToListAsync();

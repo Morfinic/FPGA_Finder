@@ -1,4 +1,5 @@
-@inject HttpClient Http
+@using Frontend.Models
+@inject FpgaApiService FpgaApi
 
 @if (IsOpen)
 {
@@ -103,7 +104,7 @@
     {
         try
         {
-            Card = await Http.GetFromJsonAsync<FpgaCard>($"api/FpgaCard/{CardId}");
+            Card = await FpgaApi.GetDetailAsync(CardId);
         }
         catch (Exception ex)
         {
@@ -115,7 +116,7 @@
     {
         try
         {
-            CardUsageLog = await Http.GetFromJsonAsync<List<DailyUsageDto>>($"api/UsageLogs/card/{CardId}");
+            CardUsageLog = await FpgaApi.GetUsageLogsAsync(CardId);
         }
         catch (Exception ex)
         {
