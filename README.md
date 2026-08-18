@@ -83,3 +83,17 @@ zaaplikuje migrację oraz zainicjalizuje bazę danych.
 * TimescaleDB
 * Sortowanie i paginacja
 * Prosta responsywność
+
+## Podjęte decyzje techniczne
+* Wykorzystanie Scalar: Wykorzystano dokumentację OpenAPI ze względu na większą znajomość narzędzia.
+* Docker Compose: Spięcie bazy danych, api oraz klienta w jeden plik compose.yaml umożliwia przygotowanie i uruchomienie 
+środowiska jedną komendą.
+* Współdzielone elemty `Shared/`: Wykorzystanie architektury .NET pozwoliło na używanie tych samych obiektów po obu 
+stronach. Pozwoliło to na uniknięcie rozsynchronizowania typów pomiędzy frontendem i backendem.
+* Wykorzystanie komponentów: Pozwoliło na stworzenie czytelniejszego oraz prostszego w zarządzaniu kodu.
+* Dodanie klasy pomocniczej zapytań http: Odizolowano komunikację API do dedykowanej klasy zamiast wykonywać je bezpośrednio]
+z poziomu widoku
+
+## Co zrobiłym inaczej
+* Wykonanie paginacji po stronie serwera: Dla małej ilości danych paginacja na danych w pamięci może być akceptowalna, 
+lecz dla znacząco większej ilości danych może skutkować gorszą wydajnością.
